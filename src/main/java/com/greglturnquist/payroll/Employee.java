@@ -50,5 +50,13 @@ public class Employee {
 		this.description = description;
 		this.manager = manager;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
 // end::code[]
