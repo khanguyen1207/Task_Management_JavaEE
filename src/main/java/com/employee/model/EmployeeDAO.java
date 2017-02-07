@@ -13,20 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.greglturnquist.payroll;
+package com.employee.model;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author Greg Turnquist
- */
-// tag::code[]
-@SpringBootApplication
-public class ReactAndSpringDataRestApplication {
+@Repository
+public interface EmployeeDAO extends JpaRepository<Employee, Long> {
+	Employee findEmpByUsername(String username);
+	@Query("select id from users u where u.username = ?1")
+	int findIdByUsername(String username);
 
-	public static void main(String[] args) {
-		SpringApplication.run(ReactAndSpringDataRestApplication.class, args);
-	}
 }
 // end::code[]

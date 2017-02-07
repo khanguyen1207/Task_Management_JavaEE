@@ -13,10 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.greglturnquist.payroll;
+package com.main;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Greg Turnquist
@@ -28,6 +33,14 @@ public class HomeController {
 	@RequestMapping(value = "/")
 	public String index() {
 		return "index";
+	}
+	@RequestMapping(value = "/vittu")
+	public String vittu(@CookieValue("JSESSIONID") String cookie, HttpSession session) {
+        System.out.println(cookie);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName(); //get logged in username
+        System.out.println(name);
+		return  "vittu";
 	}
 
 }

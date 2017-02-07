@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.greglturnquist.payroll;
+package com.main;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +34,6 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
-	@Autowired
-	private SpringDataJpaUserDetailsService userDetailsService;
 	@Autowired
 	DataSource dataSource;
 	@Override
@@ -51,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/built/**", "/main.css").permitAll()
+				.antMatchers("/vittu").access("hasRole('ADMIN')")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()

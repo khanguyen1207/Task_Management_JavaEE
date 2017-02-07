@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.greglturnquist.payroll;
+package com.main;
 
-import org.springframework.data.repository.Repository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author Greg Turnquist
  */
 // tag::code[]
-@RepositoryRestResource(exported = false)
-public interface ManagerRepository extends Repository<Manager, Long> {
+@SpringBootApplication
+public class ReactAndSpringDataRestApplication {
 
-	Manager save(Manager manager);
-
-	Manager findByName(String name);
-
+	public static void main(String[] args) {
+		SpringApplication.run(ReactAndSpringDataRestApplication.class, args);
+	}
 }
 // end::code[]
