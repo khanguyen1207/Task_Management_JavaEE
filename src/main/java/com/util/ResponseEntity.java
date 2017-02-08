@@ -1,4 +1,4 @@
-package com.employee.model;
+package com.util;
 
 /**
  * Created by khanguyen on 07/02/2017.
