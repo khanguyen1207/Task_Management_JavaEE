@@ -15,15 +15,16 @@
  */
 package com.employee.model;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Qualifier("employeeRepo")
 public interface EmployeeDAO extends JpaRepository<Employee, Long> {
-	Employee findEmpByUsername(String username);
-	@Query("select id from users u where u.username = ?1")
-	int findIdByUsername(String username);
-
+	Employee findByUsername(String username);
+//	@Query("select id from users u where u.username = ?1")
+//	int findIdByUsername(String username);
 }
 // end::code[]
