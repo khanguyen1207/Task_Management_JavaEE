@@ -15,18 +15,16 @@
  */
 package com.employee.model;
 
-import lombok.Data;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "Employee")
 public class Employee {
 
-	private @Id @GeneratedValue Long id;
+	private @Id @GeneratedValue Long userid;
 	private String username;
 	private String password;
 
@@ -62,13 +60,13 @@ public class Employee {
 		this.fb_token = fb_token;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
+//	public String getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(String role) {
+//		this.role = role;
+//	}
 
 	public String getAvatar_url() {
 		return avatar_url;
@@ -88,7 +86,7 @@ public class Employee {
 
 	private String email;
 	private String fb_token;
-	private String role;
+	//private String role;
 	private String avatar_url;
 	private boolean enabled;
 
@@ -100,12 +98,12 @@ public class Employee {
 		this.email = email;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getUserId() {
+		return userid;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setUserId(Long id) {
+		this.userid = id;
 	}
 }
 // end::code[]

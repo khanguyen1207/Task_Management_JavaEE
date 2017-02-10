@@ -25,10 +25,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import javax.sql.DataSource;
 
-/**
- * @author Greg Turnquist
- */
-// tag::code[]
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -39,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(
-				"select username,password, enabled from users where username=?")
+				"select username, password, enabled from Employee where username=?")
 				.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
 	}
 

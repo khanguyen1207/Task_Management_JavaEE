@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskDAO extends JpaRepository<Task, Long> {
     Task findById(int id);
-
 }
