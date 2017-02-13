@@ -2,11 +2,8 @@ package com.employee.controller;
 
 import com.employee.model.Employee;
 import com.employee.model.EmployeeDAO;
-import com.google.inject.Inject;
 import com.util.ResponseJSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
