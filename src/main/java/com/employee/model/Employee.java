@@ -96,6 +96,7 @@ public class Employee {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.enabled = true;
 	}
 
 	public Long getUserId() {

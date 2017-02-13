@@ -3,11 +3,11 @@ package com.util;
 /**
  * Created by khanguyen on 07/02/2017.
  */
-public class ResponseEntity {
+public class ResponseJSON {
     private final int httpStatus;
     private final String description;
 
-    public ResponseEntity(int httpStatus, String description) {
+    public ResponseJSON(int httpStatus, String description) {
         this.httpStatus = httpStatus;
         this.description = description;
     }
