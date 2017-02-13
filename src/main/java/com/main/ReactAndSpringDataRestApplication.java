@@ -22,8 +22,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.employee.controller", "com.main", "com.employee.model"})
-@EntityScan("com.employee.model")
+@ComponentScan(basePackages = {"com.employee.controller", "com.main", "com.employee.model", "com.task.controller"})
+@EntityScan({"com.employee.model", "com.task.model"})
 @EnableJpaRepositories("com.employee.model")
 public class ReactAndSpringDataRestApplication {
     public static void main(String[] args) {
