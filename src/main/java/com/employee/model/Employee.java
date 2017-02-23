@@ -23,11 +23,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Employee")
 public class Employee {
-
-	private @Id @GeneratedValue Long userid;
+	@Id
 	private String username;
 	private String password;
-
+	private String role;
+	private String email;
+	private String fb_token;
+	private String avatar_url;
+	private boolean enabled;
 	public String getUsername() {
 		return username;
 	}
@@ -60,13 +63,13 @@ public class Employee {
 		this.fb_token = fb_token;
 	}
 
-//	public String getRole() {
-//		return role;
-//	}
-//
-//	public void setRole(String role) {
-//		this.role = role;
-//	}
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	public String getAvatar_url() {
 		return avatar_url;
@@ -84,12 +87,6 @@ public class Employee {
 		this.enabled = enabled;
 	}
 
-	private String email;
-	private String fb_token;
-	//private String role;
-	private String avatar_url;
-	private boolean enabled;
-
 	public Employee() {}
 
 	public Employee(String username, String password, String email) {
@@ -97,14 +94,6 @@ public class Employee {
 		this.password = password;
 		this.email = email;
 		this.enabled = true;
-	}
-
-	public Long getUserId() {
-		return userid;
-	}
-
-	public void setUserId(Long id) {
-		this.userid = id;
 	}
 }
 // end::code[]

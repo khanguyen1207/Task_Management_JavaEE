@@ -35,13 +35,13 @@ public class EmployeeController {
         }
     }
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<?> coincard(@RequestBody Employee employee ) {
+    public ResponseEntity<?> createEmployee(@RequestBody Employee employee ) {
         try {
             employeeDAO.save(employee);
-            return new ResponseEntity<>(new ResponseJSON(200, "Success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseJSON("Success"), HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
-            return new ResponseEntity<>(new ResponseJSON(200, "Username existed"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseJSON("Username existed"), HttpStatus.OK);
         }
     }
 }

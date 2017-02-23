@@ -20,11 +20,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.employee.controller", "com.main", "com.employee.model", "com.task.controller"})
 @EntityScan({"com.employee.model", "com.task.model"})
-@EnableJpaRepositories("com.employee.model")
+@EnableJpaRepositories({"com.employee.model", "com.task.model"})
 public class ReactAndSpringDataRestApplication {
     public static void main(String[] args) {
         SpringApplication.run(ReactAndSpringDataRestApplication.class, args);

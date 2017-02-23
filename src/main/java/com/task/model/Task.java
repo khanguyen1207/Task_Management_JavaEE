@@ -1,6 +1,7 @@
 package com.task.model;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 /**
  * Created by khanguyen on 08/02/2017.
@@ -10,19 +11,15 @@ import javax.persistence.*;
 public class Task {
     @Id @GeneratedValue private int id;
     @Column(name = "description") private String description;
-    @Column(name = "empid") private int empId;
+    @Column(name = "assignee") private String empUsername;
+    @Column(name = "assignor") private String managerUsername;
     @Column(name = "empconf") private boolean employeeConfirm;
     @Column(name = "mngconf") private boolean managerConfirm;
     @Column(name = "name") private String taskName;
-
+    @Column(name = "issue_date") private Date issueDate;
+    @Column(name = "deadline") private Date deadline;
     public Task() {
 
-    }
-
-    public Task(String name, String description, int empId) {
-        this.taskName = name;
-        this.description = description;
-        this.empId = empId;
     }
 
     public String getDescription() {
@@ -33,13 +30,6 @@ public class Task {
         this.description = description;
     }
 
-    public int getEmpId() {
-        return empId;
-    }
-
-    public void setEmpId(int empId) {
-        this.empId = empId;
-    }
 
     public String getTaskName() {
         return taskName;
@@ -47,5 +37,61 @@ public class Task {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEmpUsername() {
+        return empUsername;
+    }
+
+    public void setEmpUsername(String empUsername) {
+        this.empUsername = empUsername;
+    }
+
+    public String getManagerUsername() {
+        return managerUsername;
+    }
+
+    public void setManagerUsername(String managerUsername) {
+        this.managerUsername = managerUsername;
+    }
+
+    public boolean isEmployeeConfirm() {
+        return employeeConfirm;
+    }
+
+    public void setEmployeeConfirm(boolean employeeConfirm) {
+        this.employeeConfirm = employeeConfirm;
+    }
+
+    public boolean isManagerConfirm() {
+        return managerConfirm;
+    }
+
+    public void setManagerConfirm(boolean managerConfirm) {
+        this.managerConfirm = managerConfirm;
+    }
+
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 }

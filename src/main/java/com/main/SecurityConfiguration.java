@@ -16,12 +16,15 @@
 package com.main;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -34,9 +37,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	DataSource dataSource;
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(
+		auth.jdbcAuthentication().dataSource(dataSource)
+				.passwordEncoder(passwordEncoder())
+				.usersByUsernameQuery(
 				"select username, password, enabled from Employee where username=?")
-				.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
+				.authoritiesByUsernameQuery("select username, role from Employee where username=?");
 	}
 
 	@Override
@@ -44,8 +49,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.antMatchers("/built/**", "/main.css").permitAll()
-				.antMatchers("/api/employee/create").permitAll()
-				.antMatchers("/vittu").access("hasRole('ADMIN')")
+				.antMatchers("/api/employee/create").access("hasRole('HR')")
+				.antMatchers("/task/create").access("hasRole('ADMIN')")
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
@@ -56,7 +61,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 			.csrf().disable()
 			.logout()
-				.logoutSuccessUrl("/");
+				.logoutSuccessUrl("/")
+				.deleteCookies("JSESSIONID");
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 }
