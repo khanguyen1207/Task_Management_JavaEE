@@ -27,12 +27,12 @@ public class HomeController {
     public ResponseEntity<?> index(HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        List<Employee>lstEmployee =  employeeDAO.findByUsername(username);
+        Employee employee =  employeeDAO.findByUsername(username);
         HttpSession session = request.getSession();
         session.setAttribute("user", username);
         session.setMaxInactiveInterval(30*60);
         Cookie userName = new Cookie("user", username);
-        return new ResponseEntity<>(lstEmployee.get(0), HttpStatus.OK);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
 }
