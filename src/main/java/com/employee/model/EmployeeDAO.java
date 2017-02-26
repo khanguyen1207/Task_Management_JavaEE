@@ -22,5 +22,5 @@ import java.util.List;
 
 @Repository
 public interface EmployeeDAO extends JpaRepository<Employee, Long> {
-    List<Employee> findByUsername(String username);
+    Employee findByUsername(String username);
 }

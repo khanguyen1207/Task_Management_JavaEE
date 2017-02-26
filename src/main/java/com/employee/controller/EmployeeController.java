@@ -27,11 +27,11 @@ public class EmployeeController {
     @RequestMapping(value = "/get")
     public  ResponseEntity<?> getEmployee(@RequestParam("username") String username) {
         try {
-            List<Employee> employee = employeeDAO.findByUsername(username);
-            return new ResponseEntity<>(employee.get(0), HttpStatus.OK);
+            Employee employee = employeeDAO.findByUsername(username);
+            return new ResponseEntity<>(employee, HttpStatus.OK);
         } catch (Exception e) {
             System.out.println(e);
-            return new ResponseEntity<>(new Employee("kha", "123", "coin"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseJSON("Cannot find employee"), HttpStatus.OK);
         }
     }
     @RequestMapping(value = "/create", method = RequestMethod.POST)
