@@ -1,6 +1,5 @@
 package com.main;
 
-import com.employee.model.Employee;
 import com.employee.model.EmployeeDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -23,77 +23,77 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Employee")
 public class Employee {
-	@Id
-	private String username;
-	private String password;
-	private String role;
-	private String email;
-	private String fb_token;
-	private String avatar_url;
-	private boolean enabled;
-	public String getUsername() {
-		return username;
-	}
+    @Id
+    private String username;
+    private String password;
+    private String role;
+    private String email;
+    private String fb_token;
+    private String avatar_url;
+    private boolean enabled;
+    public String getUsername() {
+        return username;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getFb_token() {
-		return fb_token;
-	}
+    public String getFb_token() {
+        return fb_token;
+    }
 
-	public void setFb_token(String fb_token) {
-		this.fb_token = fb_token;
-	}
+    public void setFb_token(String fb_token) {
+        this.fb_token = fb_token;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-	public String getAvatar_url() {
-		return avatar_url;
-	}
+    public String getAvatar_url() {
+        return avatar_url;
+    }
 
-	public void setAvatar_url(String avatar_url) {
-		this.avatar_url = avatar_url;
-	}
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	public Employee() {}
+    public Employee() {}
 
-	public Employee(String username, String password, String email) {
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.enabled = true;
-	}
+    public Employee(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.enabled = true;
+    }
 }
 // end::code[]

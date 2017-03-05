@@ -17,7 +17,6 @@ package com.main;
 
 import com.employee.model.EmployeeDAO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,55 +41,55 @@ import java.io.IOException;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	DataSource dataSource;
+    @Autowired
+    DataSource dataSource;
     @Autowired
     EmployeeDAO employeeDAO;
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource)
-				.passwordEncoder(passwordEncoder())
-				.usersByUsernameQuery(
-				"select username, password, enabled from Employee where username=?")
-				.authoritiesByUsernameQuery("select username, role from Employee where username=?");
-	}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .passwordEncoder(passwordEncoder())
+                .usersByUsernameQuery(
+                        "select username, password, enabled from Employee where username=?")
+                .authoritiesByUsernameQuery("select username, role from Employee where username=?");
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.authorizeRequests()
-				.antMatchers("/built/**", "/main.css").permitAll()
-				.antMatchers("/api/employee/create").access("hasRole('HR')")
-				.antMatchers("/task/create").access("hasRole('ADMIN')")
-				.anyRequest().authenticated()
-				.and()
-			.formLogin().successHandler(new AuthenticationSuccessHandler() {
-                @Override
-                public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                    System.out.println(authentication.getName());
-                    httpServletResponse.setContentType("application/json");
-                    ObjectMapper mapper = new ObjectMapper();
-                    String jsonString = mapper.writeValueAsString(employeeDAO.findByUsername(authentication.getName()));
-                    httpServletResponse.setCharacterEncoding("UTF-8");
-                    httpServletResponse.getWriter().write(jsonString);
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/built/**", "/main.css").permitAll()
+                .antMatchers("/api/employee/create").access("hasRole('HR')")
+                .antMatchers("/task/create").access("hasRole('ADMIN')")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().successHandler(new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                System.out.println(authentication.getName());
+                httpServletResponse.setContentType("application/json");
+                ObjectMapper mapper = new ObjectMapper();
+                String jsonString = mapper.writeValueAsString(employeeDAO.findByUsername(authentication.getName()));
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.getWriter().write(jsonString);
 
-                }
-            })
-				//.defaultSuccessUrl("/", true)
-				.permitAll()
-				.and()
-			.httpBasic()
-				.and()
-			.csrf().disable()
-			.logout()
-				.logoutSuccessUrl("/")
-				.deleteCookies("JSESSIONID");
-	}
+            }
+        })
+                //.defaultSuccessUrl("/", true)
+                .permitAll()
+                .and()
+                .httpBasic()
+                .and()
+                .csrf().disable()
+                .logout()
+                .logoutSuccessUrl("/")
+                .deleteCookies("JSESSIONID");
+    }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 }
 // end::code[]
