@@ -9,6 +9,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.social.UserIdSource;
+import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
+import org.springframework.social.config.annotation.EnableSocial;
+import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
@@ -27,7 +31,8 @@ import javax.sql.DataSource;
  * Created by khanguyen on 23/02/2017.
  */
 @Configuration
-public class SocialConfig {
+@EnableSocial
+public class SocialConfig implements SocialConfigurer{
     @Autowired
     Environment environment;
     @Autowired
@@ -36,8 +41,8 @@ public class SocialConfig {
     public ConnectionFactoryLocator connectionFactoryLocator() {
         ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
         registry.addConnectionFactory( new FacebookConnectionFactory(
-                environment.getProperty("facebook.clientId"),
-                environment.getProperty("facebook.clientSecret")
+                "261313457627712",
+                "e1006caa419e631760a91714c6b99f92"
         ));
         return registry;
     }
@@ -77,5 +82,20 @@ public class SocialConfig {
         return facebookConnection != null ?
                 facebookConnection.getApi() :
                 new FacebookTemplate("");
+    }
+
+    @Override
+    public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer, Environment environment) {
+        connectionFactoryConfigurer.addConnectionFactory(new FacebookConnectionFactory("261313457627712", "e1006caa419e631760a91714c6b99f92"));
+    }
+
+    @Override
+    public UserIdSource getUserIdSource() {
+        return null;
+    }
+
+    @Override
+    public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+        return usersConnectionRepository();
     }
 }

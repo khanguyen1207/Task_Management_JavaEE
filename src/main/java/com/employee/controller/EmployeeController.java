@@ -16,7 +16,7 @@ import java.util.List;
 //Note @RestController allow us to return object as json in response body
 //Try to compare @Controller to @RestController f
 @RestController
-@RequestMapping(value = "api/employee")
+@RequestMapping(value = "employee")
 public class EmployeeController {
     @Autowired
     private EmployeeDAO employeeDAO;
@@ -42,6 +42,15 @@ public class EmployeeController {
         } catch (Exception e) {
             System.out.println(e);
             return new ResponseEntity<>(new ResponseJSON("Username existed"), HttpStatus.OK);
+        }
+    }
+    @RequestMapping(value = "/getall")
+    public ResponseEntity<?> getAllEmployee() {
+        try {
+            List<Employee> lstEmployees =  employeeDAO.findAll();
+            return new ResponseEntity<>(lstEmployees, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ResponseJSON("Can't get employee"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

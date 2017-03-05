@@ -15,6 +15,9 @@
  */
 package com.main;
 
+import com.employee.model.EmployeeDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +26,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +44,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	DataSource dataSource;
+    @Autowired
+    EmployeeDAO employeeDAO;
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
@@ -53,8 +64,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/task/create").access("hasRole('ADMIN')")
 				.anyRequest().authenticated()
 				.and()
-			.formLogin()
-				.defaultSuccessUrl("/", true)
+			.formLogin().successHandler(new AuthenticationSuccessHandler() {
+                @Override
+                public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                    System.out.println(authentication.getName());
+                    httpServletResponse.setContentType("application/json");
+                    ObjectMapper mapper = new ObjectMapper();
+                    String jsonString = mapper.writeValueAsString(employeeDAO.findByUsername(authentication.getName()));
+                    httpServletResponse.setCharacterEncoding("UTF-8");
+                    httpServletResponse.getWriter().write(jsonString);
+
+                }
+            })
+				//.defaultSuccessUrl("/", true)
 				.permitAll()
 				.and()
 			.httpBasic()

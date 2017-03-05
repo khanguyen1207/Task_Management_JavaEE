@@ -11,13 +11,14 @@ import java.sql.Date;
 public class Task {
     @Id @GeneratedValue private int id;
     @Column(name = "description") private String description;
-    @Column(name = "assignee") private String empUsername;
-    @Column(name = "assignor") private String managerUsername;
+    @Column(name = "assignee") private String assignee;
+    @Column(name = "assignor") private String assignor;
     @Column(name = "empconf") private boolean employeeConfirm;
     @Column(name = "mngconf") private boolean managerConfirm;
-    @Column(name = "name") private String taskName;
-    @Column(name = "issue_date") private Date issueDate;
-    @Column(name = "deadline") private Date deadline;
+    @Column(name = "title") private String title;
+    @Column(name = "status") private String status;
+    @Column(name = "issue_date") private Date startTime;
+    @Column(name = "deadline") private Date endTime;
     public Task() {
 
     }
@@ -31,12 +32,12 @@ public class Task {
     }
 
 
-    public String getTaskName() {
-        return taskName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getId() {
@@ -47,20 +48,20 @@ public class Task {
         this.id = id;
     }
 
-    public String getEmpUsername() {
-        return empUsername;
+    public String getAssignee() {
+        return assignee;
     }
 
-    public void setEmpUsername(String empUsername) {
-        this.empUsername = empUsername;
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
     }
 
-    public String getManagerUsername() {
-        return managerUsername;
+    public String getAssignor() {
+        return assignor;
     }
 
-    public void setManagerUsername(String managerUsername) {
-        this.managerUsername = managerUsername;
+    public void setAssignor(String assignor) {
+        this.assignor = assignor;
     }
 
     public boolean isEmployeeConfirm() {
@@ -79,19 +80,27 @@ public class Task {
         this.managerConfirm = managerConfirm;
     }
 
-    public Date getIssueDate() {
-        return issueDate;
+    public Date getStartTime() {
+        return startTime;
     }
 
-    public void setIssueDate(Date issueDate) {
-        this.issueDate = issueDate;
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getDeadline() {
-        return deadline;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
