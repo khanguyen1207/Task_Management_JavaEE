@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author 51202_000
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({com.task.model.TaskTest.class, com.task.model.TaskDAOTest.class})
+@Suite.SuiteClasses({com.task.model.TaskTest.class})
 public class ModelSuite {
 
     @BeforeClass

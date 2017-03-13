@@ -1,101 +1,75 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.task.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-/**
- *
- * @author 51202_000
- */
+@RunWith(SpringRunner.class)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace= Replace.NONE)
 public class TaskDAOTest {
-    
-    public TaskDAOTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of findById method, of class TaskDAO.
-     */
-    @Test
-    public void testFindById() {
-        System.out.println("findById");
-        int id = 0;
-        TaskDAO instance = new TaskDAOImpl();
-        Task expResult = null;
-        Task result = instance.findById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of findByAssignee method, of class TaskDAO.
-     */
-    @Test
-    public void testFindByAssignee() {
-        System.out.println("findByAssignee");
-        String assignee = "";
-        TaskDAO instance = new TaskDAOImpl();
-        List<Task> expResult = null;
-        List<Task> result = instance.findByAssignee(assignee);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteById method, of class TaskDAO.
-     */
-    @Test
-    public void testDeleteById() {
-        System.out.println("deleteById");
-        int id = 0;
-        TaskDAO instance = new TaskDAOImpl();
-        Long expResult = null;
-        Long result = instance.deleteById(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    public class TaskDAOImpl implements TaskDAO {
-
-        public Task findById(int id) {
-            return null;
-        }
-
-        public List<Task> findByAssignee(String assignee) {
-            return null;
-        }
-
-        public Long deleteById(int id) {
-            return null;
-        }
-    }
-    
+	@Autowired
+	private TaskDAO taskDAO;
+	
+	
+	@Test
+	public void findByIdTest(){
+		Task task = taskDAO.findById(7);
+		assertThat(task.getTitle()).isEqualTo("name");
+	}
+	
+	@Test
+	public void findByIdTest1(){
+		Task task = taskDAO.findById(7);
+		assertThat(task.getAssignee()).isEqualTo("khanguyen");
+	}
+	
+	@Test
+	public void findByIdTest2(){
+		Task task = taskDAO.findById(7);
+		assertThat(task.getAssignor()).isEqualTo("khanguyen");
+	}
+	
+	@Test
+	public void finbyAssgineeTest(){
+		List<Task> tasks= taskDAO.findByAssignee("khanguyen");
+		assertThat(tasks.size()).isEqualTo(3);
+		
+	}
+	
+	@Test
+	public void finbyAssgineeTest1(){
+		List<Task> tasks= taskDAO.findByAssignee("zozo");
+		assertThat(tasks.size()).isEqualTo(1);
+		
+	}
+	
+	@Test
+	public void finbyAssgineeTest2(){
+		List<Task> tasks= taskDAO.findByAssignee("abcde");
+		assertThat(tasks.size()).isEqualTo(1);
+		
+	}
+	@Test
+	public void finbyAssgineeTest3(){
+		List<Task> tasks= taskDAO.findByAssignee("donaldtrump");
+		assertThat(tasks.size()).isEqualTo(2);
+		
+	}
+	@Test
+	public void finbyAssgineeTest4(){
+		List<Task> tasks= taskDAO.findByAssignee("khanguyen1");
+		assertThat(tasks.size()).isEqualTo(1);
+		
+	}
+	
+	
 }
