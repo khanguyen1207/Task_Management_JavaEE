@@ -22,6 +22,10 @@ public class Task {
     public Task() {
 
     }
+    
+    public Task(String description){
+        this.description=description;
+    }
 
     public String getDescription() {
         return description;

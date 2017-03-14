@@ -12,7 +12,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 /**
  * Created by khanguyen on 26/02/2017.
  */
-//Can't think of a proper name for this class
 public class MySignInAdapter implements SignInAdapter{
     @Autowired
     EmployeeDAO employeeDAO;

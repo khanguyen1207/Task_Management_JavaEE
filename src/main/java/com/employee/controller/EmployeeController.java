@@ -56,8 +56,6 @@ public class EmployeeController {
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
         employee.setPassword(new BCryptPasswordEncoder().encode(employee.getPassword()));
         employee.setEnabled(true);
-        if (employee.getAvatar_url() == null)
-            employee.setAvatar_url("http://i.imgur.com/NJ01RZC.jpg");
         if (employee.getRole() == null)
             employee.setRole("ROLE_USER");
         try {
