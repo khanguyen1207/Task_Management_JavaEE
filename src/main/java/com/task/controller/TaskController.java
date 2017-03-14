@@ -50,7 +50,6 @@ public class TaskController {
     }
     @RequestMapping(value = "/task/update", method = RequestMethod.PUT)
     public ResponseEntity<?> updateTask(@RequestBody Task task) {
-        System.out.println("updating");
         try {
             taskDAO.save(task);
             return new ResponseEntity<>(taskDAO.findById(task.getId()), HttpStatus.OK);

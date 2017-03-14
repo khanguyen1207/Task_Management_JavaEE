@@ -17,20 +17,22 @@ package com.main;
 
 import com.employee.model.EmployeeDAO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.util.ResponseJSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
@@ -45,6 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     DataSource dataSource;
     @Autowired
     EmployeeDAO employeeDAO;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
@@ -59,22 +62,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/built/**", "/main.css").permitAll()
-                .antMatchers("/api/employee/create").access("hasRole('HR')")
+                .antMatchers("/employee/update","/employee/create", "/employee/delete").access("hasRole('HR')")
                 .antMatchers("/task/create").access("hasRole('ADMIN')")
+                .antMatchers("/").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().successHandler(new AuthenticationSuccessHandler() {
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                System.out.println(authentication.getName());
-                httpServletResponse.setContentType("application/json");
-                ObjectMapper mapper = new ObjectMapper();
-                String jsonString = mapper.writeValueAsString(employeeDAO.findByUsername(authentication.getName()));
-                httpServletResponse.setCharacterEncoding("UTF-8");
-                httpServletResponse.getWriter().write(jsonString);
+                .formLogin()
+                .successHandler((httpServletRequest, httpServletResponse, authentication) -> {
+                    System.out.println(authentication.getName());
+                    httpServletResponse.setContentType("application/json");
+                    ObjectMapper mapper = new ObjectMapper();
+                    String jsonString = mapper.writeValueAsString(employeeDAO.findByUsername(authentication.getName()));
+                    httpServletResponse.setCharacterEncoding("UTF-8");
+                    httpServletResponse.getWriter().write(jsonString);
 
-            }
-        })
+                })
+                .failureHandler((httpServletRequest, httpServletResponse, e) -> {
+                    httpServletResponse.setContentType("application/json");
+                    ObjectMapper mapper = new ObjectMapper();
+                    String jsonString = mapper.writeValueAsString(new ResponseJSON("Login failed - Wrong password"));
+                    httpServletResponse.setCharacterEncoding("UTF-8");
+                    httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
+                    httpServletResponse.getWriter().write(jsonString);
+                })
                 //.defaultSuccessUrl("/", true)
                 .permitAll()
                 .and()
@@ -82,9 +93,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .logout()
-                .logoutSuccessUrl("/")
+//                .addLogoutHandler((httpServletRequest, httpServletResponse, authentication) -> {
+//
+//                })
+//                .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID");
+        http.exceptionHandling().authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> {
+            if (e != null) {
+                httpServletResponse.setContentType("application/json");
+                ObjectMapper mapper = new ObjectMapper();
+                String jsonString = mapper.writeValueAsString(new ResponseJSON("Login failed - entrypoint"));
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                httpServletResponse.getWriter().write(jsonString);
+            }
+        });
     }
+
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web
+//                .ignoring()
+//                .antMatchers("/resources/**"); // #3
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
