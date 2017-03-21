@@ -15,11 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by khanguyen on 07/02/2017.
- */
-//Note @RestController allow us to return object as json in response body
-//Try to compare @Controller to @RestController f
 @RestController
 @RequestMapping(value = "employee")
 public class EmployeeController {

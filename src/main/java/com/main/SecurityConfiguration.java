@@ -56,7 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/built/**", "/main.css").permitAll()
                 .antMatchers("/employee/update","/employee/create", "/employee/delete").access("hasRole('HR')")
                 .antMatchers("/task/create").access("hasRole('ADMIN')")
                 .antMatchers("/").permitAll()
@@ -81,17 +80,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     httpServletResponse.setStatus(HttpStatus.FORBIDDEN.value());
                     httpServletResponse.getWriter().write(jsonString);
                 })
-                //.defaultSuccessUrl("/", true)
                 .permitAll()
                 .and()
                 .httpBasic()
                 .and()
                 .csrf().disable()
                 .logout()
-//                .addLogoutHandler((httpServletRequest, httpServletResponse, authentication) -> {
-//
-//                })
-//                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID");
         http.exceptionHandling().authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> {
             if (e != null) {

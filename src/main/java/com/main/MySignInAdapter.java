@@ -9,15 +9,11 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 
-/**
- * Created by khanguyen on 26/02/2017.
- */
 public class MySignInAdapter implements SignInAdapter{
     @Autowired
     EmployeeDAO employeeDAO;
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest nativeWebRequest) {
-        //Employee employee = employeeDAO.findByUsername(userId);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userId, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return null;

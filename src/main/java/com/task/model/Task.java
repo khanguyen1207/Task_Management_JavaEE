@@ -3,9 +3,6 @@ package com.task.model;
 import javax.persistence.*;
 import java.sql.Date;
 
-/**
- * Created by khanguyen on 08/02/2017.
- */
 @Entity
 @Table(name = "task")
 public class Task {

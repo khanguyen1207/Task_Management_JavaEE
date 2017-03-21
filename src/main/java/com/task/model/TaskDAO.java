@@ -6,9 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Created by khanguyen on 08/02/2017.
- */
 @Repository
 public interface TaskDAO extends JpaRepository<Task, Long> {
     Task findById(int id);

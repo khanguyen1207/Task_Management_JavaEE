@@ -26,7 +26,6 @@ import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
-
 /**
  * Created by khanguyen on 23/02/2017.
  */
@@ -41,8 +40,8 @@ public class SocialConfig implements SocialConfigurer{
     public ConnectionFactoryLocator connectionFactoryLocator() {
         ConnectionFactoryRegistry registry = new ConnectionFactoryRegistry();
         registry.addConnectionFactory( new FacebookConnectionFactory(
-                "261313457627712",
-                "e1006caa419e631760a91714c6b99f92"
+                environment.getProperty("spring.social.facebook.app-id"),
+                environment.getProperty("spring.social.facebook.app-secret")
         ));
         return registry;
     }
@@ -91,7 +90,13 @@ public class SocialConfig implements SocialConfigurer{
 
     @Override
     public UserIdSource getUserIdSource() {
-        return null;
+        return () -> {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if(authentication == null) {
+                throw new IllegalStateException("No user signed in");
+            }
+            return authentication.getName();
+        };
     }
 
     @Override

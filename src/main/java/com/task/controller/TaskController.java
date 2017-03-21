@@ -14,9 +14,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by khanguyen on 09/02/2017.
- */
 @RestController
 public class TaskController {
     @Autowired
