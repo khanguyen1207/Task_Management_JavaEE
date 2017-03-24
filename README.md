@@ -14,3 +14,20 @@ This is a Trello likely app that helps managers to create tasks and assign them 
 * [MySql](https://www.mysql.com/) is required
 * I'm migrating from MySQL into Google [Firebase](https://firebase.google.com/) and then deploy the whole app to [Heroku](https://heroku.com)
 
+# How the app look like 
+* Login Screen
+<p align="center">
+  <img src="http://i.imgur.com/hrZ6Wgz.png" width="550"/>
+</p>
+<p align="center">
+  Login Screen
+</p>
+<p align="center">
+  <img src="http://i.imgur.com/0xfcrdd.png" width="750"/>
+</p>
+<p align="center">
+Task display 
+</p>
+
+
+
