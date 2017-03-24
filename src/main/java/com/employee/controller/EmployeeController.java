@@ -2,6 +2,7 @@ package com.employee.controller;
 
 import com.employee.model.Employee;
 import com.employee.model.EmployeeDAO;
+import com.employee.model.EmployeeDAOImpl;
 import com.util.EmployeeJSON;
 import com.util.ResponseJSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.List;
 @RequestMapping(value = "employee")
 public class EmployeeController {
     @Autowired
-    private EmployeeDAO employeeDAO;
+    private EmployeeDAOImpl employeeDAO;
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public ResponseEntity<?> updateEmployee(@RequestBody Employee employee) {
         //TODO Implement actuall controller method
