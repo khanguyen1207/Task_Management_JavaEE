@@ -5,7 +5,7 @@
  */
 package com.task.model;
 
-import java.sql.Date;
+import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -183,56 +183,56 @@ public class TaskTest {
     /**
      * Test of isEmployeeConfirm method, of class Task.
      */
-    @Test
-    public void testIsEmployeeConfirm() {
-        System.out.println("isEmployeeConfirm");
-        Task instance = new Task();
-        boolean expResult = false;
-        boolean result = instance.isEmployeeConfirm();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        
-    }
+//    @Test
+//    public void testIsEmployeeConfirm() {
+//        System.out.println("isEmployeeConfirm");
+//        Task instance = new Task();
+//        boolean expResult = false;
+//        boolean result = instance.isEmployeeConfirm();
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//
+//    }
 
     /**
      * Test of setEmployeeConfirm method, of class Task.
      */
-    @Test
-    public void testSetEmployeeConfirm() {
-        System.out.println("setEmployeeConfirm");
-        boolean employeeConfirm = true;
-        Task instance = new Task();
-        instance.setEmployeeConfirm(employeeConfirm);
-        // TODO review the generated test code and remove the default call to fail.
-        assertEquals(instance.isEmployeeConfirm(), employeeConfirm);
-    }
+//    @Test
+//    public void testSetEmployeeConfirm() {
+//        System.out.println("setEmployeeConfirm");
+//        boolean employeeConfirm = true;
+//        Task instance = new Task();
+//        instance.setEmployeeConfirm(employeeConfirm);
+//        // TODO review the generated test code and remove the default call to fail.
+//        assertEquals(instance.isEmployeeConfirm(), employeeConfirm);
+//    }
 
     /**
      * Test of isManagerConfirm method, of class Task.
      */
-    @Test
-    public void testIsManagerConfirm() {
-        System.out.println("isManagerConfirm");
-        Task instance = new Task();
-        boolean expResult = false;
-        boolean result = instance.isManagerConfirm();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-
-    }
+//    @Test
+//    public void testIsManagerConfirm() {
+//        System.out.println("isManagerConfirm");
+//        Task instance = new Task();
+//        boolean expResult = false;
+//        boolean result = instance.isManagerConfirm();
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//
+//    }
 
     /**
      * Test of setManagerConfirm method, of class Task.
      */
-    @Test
-    public void testSetManagerConfirm() {
-        System.out.println("setManagerConfirm");
-        boolean managerConfirm = true;
-        Task instance = new Task();
-        instance.setManagerConfirm(managerConfirm);
-        // TODO review the generated test code and remove the default call to fail.
-        assertEquals(instance.isManagerConfirm(), managerConfirm);
-    }
+//    @Test
+//    public void testSetManagerConfirm() {
+//        System.out.println("setManagerConfirm");
+//        boolean managerConfirm = true;
+//        Task instance = new Task();
+//        instance.setManagerConfirm(managerConfirm);
+//        // TODO review the generated test code and remove the default call to fail.
+//        assertEquals(instance.isManagerConfirm(), managerConfirm);
+//    }
 
     /**
      * Test of getStartTime method, of class Task.

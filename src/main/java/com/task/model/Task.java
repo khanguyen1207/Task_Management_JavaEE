@@ -1,27 +1,50 @@
 package com.task.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "task")
 public class Task {
-    @Id @GeneratedValue private int id;
-    @Column(name = "description") private String description;
-    @Column(name = "assignee") private String assignee;
-    @Column(name = "assignor") private String assignor;
-    @Column(name = "empconf") private boolean employeeConfirm;
-    @Column(name = "mngconf") private boolean managerConfirm;
-    @Column(name = "title") private String title;
-    @Column(name = "status") private String status;
-    @Column(name = "issue_date") private Date startTime;
-    @Column(name = "deadline") private Date endTime;
+    @Id
+    @GeneratedValue
+    private int id;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "assignee")
+    private String assignee;
+    @Column(name = "assignor")
+    private String assignor;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "issue_date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date startTime;
+    @Column(name = "deadline")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date endTime;
+
     public Task() {
 
     }
-    
-    public Task(String description){
-        this.description=description;
+
+    public Task(String description) {
+        this.description = description;
+    }
+
+    public Task(int id, String description, String assignee, String assignor, String title, String status, Date startTime, Date endTime) {
+        this.id = id;
+        this.description = description;
+        this.assignee = assignee;
+        this.assignor = assignor;
+        this.title = title;
+        this.status = status;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public String getDescription() {
@@ -63,22 +86,6 @@ public class Task {
 
     public void setAssignor(String assignor) {
         this.assignor = assignor;
-    }
-
-    public boolean isEmployeeConfirm() {
-        return employeeConfirm;
-    }
-
-    public void setEmployeeConfirm(boolean employeeConfirm) {
-        this.employeeConfirm = employeeConfirm;
-    }
-
-    public boolean isManagerConfirm() {
-        return managerConfirm;
-    }
-
-    public void setManagerConfirm(boolean managerConfirm) {
-        this.managerConfirm = managerConfirm;
     }
 
     public Date getStartTime() {

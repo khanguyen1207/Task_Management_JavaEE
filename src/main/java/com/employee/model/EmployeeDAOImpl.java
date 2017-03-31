@@ -55,7 +55,7 @@ public class EmployeeDAOImpl {
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 if (jsonObject.get(key) instanceof JSONObject) {
-                    System.out.println(jsonObject.get(key).toString());
+                    //System.out.println(jsonObject.get(key).toString());
                     employees.add(new Gson().fromJson(jsonObject.get(key).toString(), Employee.class));
                 }
             }

@@ -16,6 +16,8 @@
 package com.main;
 
 import com.employee.model.EmployeeDAO;
+import com.employee.model.EmployeeDAOImpl;
+import com.employee.model.EmployeeDetailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.util.ResponseJSON;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -42,20 +45,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     DataSource dataSource;
     @Autowired
     EmployeeDAO employeeDAO;
+    @Autowired
+    EmployeeDAOImpl employeeDAOIpml;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .passwordEncoder(passwordEncoder())
-                .usersByUsernameQuery(
-                        "select username, password, enabled from Employee where username=?")
-                .authoritiesByUsernameQuery("select username, role from Employee where username=?");
+        auth.userDetailsService(userDetailsServiceBean())
+                .passwordEncoder(passwordEncoder());
+    }
+
+    @Override
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return new EmployeeDetailService(employeeDAOIpml);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/signin/facebook", "/connect/facebook").permitAll()
                 .antMatchers("/employee/update","/employee/create", "/employee/delete").access("hasRole('HR')")
                 .antMatchers("/task/create").access("hasRole('ADMIN')")
                 .antMatchers("/").permitAll()
@@ -86,6 +94,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .logout()
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
                 .deleteCookies("JSESSIONID");
         http.exceptionHandling().authenticationEntryPoint((httpServletRequest, httpServletResponse, e) -> {
